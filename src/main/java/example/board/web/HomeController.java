@@ -3,6 +3,7 @@ package example.board.web;
 import example.board.SessionConst;
 import example.board.domain.member.Member;
 import example.board.domain.member.MemberRepository;
+import example.board.web.argumentREsolver.Login;
 import example.board.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class HomeController implements SessionConst {
+public class HomeController{
 
     private final MemberRepository memberRepository;
     private final SessionManager sessionManager;
@@ -64,7 +65,19 @@ public class HomeController implements SessionConst {
             return "home";
         }
 
-        Member member = (Member) session.getAttribute(LOGIN_MEMBER);
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        //세션에 회원 데이터가 없으면 home
+        if (member == null) {
+            return "home";
+        }
+        //세션이 유지되면 로그인으로 이동
+        model.addAttribute("member", member);
+        log.info("session member = {}", member);
+        return "loginHome";
+    }
+
+//    @GetMapping("/")
+    public String homeLoginV3Spring(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = false) Member member, Model model) {
         //세션에 회원 데이터가 없으면 home
         if (member == null) {
             return "home";
@@ -76,14 +89,14 @@ public class HomeController implements SessionConst {
     }
 
     @GetMapping("/")
-    public String homeLoginV3Spring(@SessionAttribute(name = LOGIN_MEMBER, required = false) Member member, Model model) {
+    public String homeLoginV3ArgumentResolver(@Login Member loginMember, Model model) {
         //세션에 회원 데이터가 없으면 home
-        if (member == null) {
+        if (loginMember == null) {
             return "home";
         }
         //세션이 유지되면 로그인으로 이동
-        model.addAttribute("member", member);
-        log.info("session member = {}", member);
+        model.addAttribute("member", loginMember);
+        log.info("session loginMember = {}", loginMember);
         return "loginHome";
     }
 }
