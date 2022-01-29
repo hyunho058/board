@@ -89,6 +89,7 @@ public class LoginController implements SessionConst {
         //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
         HttpSession session = request.getSession(true); // 세션의 `create`옵션 -  default가 true이며  request.getSession(true) 일경우 세션이 있으면 기존 세션 반환
         //세션에 로그인 회원 정보 보관
+        session.setMaxInactiveInterval(60); //60초 - application.properties에 server.servlet.session.timeout=60 로 글로벌 설정하여 주고 session.setMaxInactiveInterval(60)를 쓰면 특정 세션에만 유효시간 적용
         session.setAttribute(LOGIN_MEMBER, loginMember);
 
         return "redirect:/";
