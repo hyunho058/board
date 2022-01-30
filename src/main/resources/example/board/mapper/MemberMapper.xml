@@ -9,6 +9,10 @@
         insert into member (login_id, name, password) values(#{loginId}, #{name}, #{password})
     </insert>
 
+    <select id="loginCheck" resultType="example.board.domain.member.dto.MemberDto">
+        select * from member as m where m.login_id = #{loginId} and m.password = #{password}
+    </select>
+
     <select id="findAll" resultType="example.board.domain.member.dto.MemberDto">
         SELECT * FROM member
     </select>

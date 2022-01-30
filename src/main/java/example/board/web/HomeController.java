@@ -3,6 +3,7 @@ package example.board.web;
 import example.board.SessionConst;
 import example.board.domain.member.Member;
 import example.board.domain.member.MemberRepository;
+import example.board.domain.member.dto.MemberDto;
 import example.board.web.argumentREsolver.Login;
 import example.board.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
@@ -88,8 +89,20 @@ public class HomeController{
         return "loginHome";
     }
 
+//    @GetMapping("/")
+//    public String homeLoginV3ArgumentResolver(@Login Member loginMember, Model model) {
+//        //세션에 회원 데이터가 없으면 home
+//        if (loginMember == null) {
+//            return "home";
+//        }
+//        //세션이 유지되면 로그인으로 이동
+//        model.addAttribute("member", loginMember);
+//        log.info("session loginMember = {}", loginMember);
+//        return "loginHome";
+//    }
+
     @GetMapping("/")
-    public String homeLoginV3ArgumentResolver(@Login Member loginMember, Model model) {
+    public String homeLoginV3ArgumentResolver(@Login MemberDto loginMember, Model model) {
         //세션에 회원 데이터가 없으면 home
         if (loginMember == null) {
             return "home";
