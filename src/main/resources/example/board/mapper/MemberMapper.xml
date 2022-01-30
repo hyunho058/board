@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="example.board.mapper.MemberMapper">
+    <select id="findById" resultType="example.board.domain.member.dto.MemberDto">
+        select * from member where id = #{id}
+    </select>
+
+    <insert id="save">
+        insert into member (login_id, name, password) values(#{loginId}, #{name}, #{password})
+    </insert>
+
+    <select id="findAll" resultType="example.board.domain.member.dto.MemberDto">
+        SELECT * FROM member
+    </select>
+
+    <select id="nameCheck" resultType="String">
+        SELECT COUNT(name) FROM user WHERE name = #{name}
+    </select>
+</mapper>

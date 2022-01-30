@@ -2,6 +2,7 @@ package example.board.web.member;
 
 import example.board.domain.member.Member;
 import example.board.domain.member.MemberRepository;
+import example.board.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @GetMapping("/add")
     public String addFrom(@ModelAttribute("member") Member member) {
@@ -30,7 +33,7 @@ public class MemberController {
             return "members/addMemberForm";
         }
 
-        memberRepository.save(member);
+        memberService.createMember(member);
         return "redirect:/";
     }
 }

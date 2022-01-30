@@ -3,6 +3,7 @@ package example.board.web.login;
 import example.board.SessionConst;
 import example.board.domain.login.LoginService;
 import example.board.domain.member.Member;
+import example.board.domain.member.service.MemberService;
 import example.board.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ import javax.validation.Valid;
 public class LoginController implements SessionConst {
     private final LoginService loginService;
     private final SessionManager sessionManager;
+
+    private final MemberService memberService;
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm) {
