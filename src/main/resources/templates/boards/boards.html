@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.board}">게시판</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='addForm.html'"
+                    th:onclick="|location.href='@{/boards/add}'|"
+                    type="button" th:text="#{page.addBoard}">게시글 등록</button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:text="#{label.board.id}">ID</th>
+                <th th:text="#{label.board.title}">상품명</th>
+                <th th:text="#{label.board.contents}">가격</th>
+                <th th:text="#{label.board.create}">수량</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board : ${boards}">
+                <td><a href="item.html" th:href="@{/boards/{itemId}(itemId=${board.id})}" th:text="${board.id}">회원id</a></td>
+                <td><a href="item.html" th:href="@{|/boards/${board.id}|}" th:text="${board.title}">상품명</a></td>
+                <td th:text="${board.contents}">10000</td>
+                <td th:text="${board.created_at}">10</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>
