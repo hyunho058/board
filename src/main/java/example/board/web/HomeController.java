@@ -8,17 +8,17 @@ import example.board.web.argumentREsolver.Login;
 import example.board.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Locale;
 
 @Slf4j
 @Controller
@@ -102,7 +102,32 @@ public class HomeController{
 //    }
 
     @GetMapping("/")
-    public String homeLoginV3ArgumentResolver(@Login MemberDto loginMember, Model model) {
+    public String homeLoginV3ArgumentResolver(@Login MemberDto loginMember,
+                                              Model model,
+                                              HttpServletRequest request,
+                                              HttpServletResponse response,
+                                              HttpMethod httpMethod,    //Http메서드를 조회한다
+                                              Locale locale,    //Locale 정보 조회
+                                              @RequestHeader MultiValueMap<String, String> headerMap,   //모든 Httpㅐ더를 MultiValueMap형식으로 조회
+                                              @RequestHeader("host") String host,   //특정 HTTP헤더를 조회, 속성(필수값 여부 : required, 기본값 속성 : defaultValue)
+                                              @CookieValue(value = "myCooke", required = false) String cookie) {
+        //trace > debug > info > warn > error//
+        log.trace("trace = {}", loginMember);
+        log.debug("debug = {}", loginMember);
+        log.info("info = {}", loginMember);
+        log.warn("warn = {}", loginMember);
+        log.error("error = {}", loginMember);
+
+        log.info("request = {}", request);
+        log.info("response = {}", response);
+        log.info("httpMethod = {}", httpMethod);
+        log.info("locale = {}", locale);
+        log.info("headerMap = {}", headerMap); //Map과 유사한데, 하나의 키에 여러 값을 받을 수 있다.
+        log.info("host = {}", host);
+        log.info("cookie = {}", cookie);
+
+
+
         //세션에 회원 데이터가 없으면 home
         if (loginMember == null) {
             return "home";
